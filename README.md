@@ -1,4 +1,4 @@
-# AfriMarket Prototype
+# IntelAfrica Prototype
 
 An innovative market search and trading platform designed for African commerce. AfriMarket enables users to discover, connect, and conduct business across African markets with an intuitive dashboard interface.
 https://intelafrica-eight.vercel.app
