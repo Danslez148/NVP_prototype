@@ -131,11 +131,11 @@ export default function AfricaMap({ countries, activeMetric, onCountryClick }) {
             const country = countries.find(c => c.name === name)
             if (country) {
               setHoveredCountry(country)
-              setTooltipPos({ x: event.pageX, y: event.pageY })
+              setTooltipPos({ x: event.clientX, y: event.clientY })  // ← clientX/Y
             }
           })
           .on('mousemove', (event) => {
-            setTooltipPos({ x: event.pageX, y: event.pageY })
+            setTooltipPos({ x: event.clientX, y: event.clientY })    // ← clientX/Y
           })
           .on('mouseout', () => {
             setHoveredCountry(null)
@@ -189,34 +189,6 @@ export default function AfricaMap({ countries, activeMetric, onCountryClick }) {
         ref={svgRef}
         style={{ width: '100%', height: '400px', display: 'block' }}
       />
-
-      {/* Tooltip */}
-      {hoveredCountry && (
-        <div
-          style={{
-            position: 'fixed',
-            left: tooltipPos.x + 10,
-            top: tooltipPos.y - 10,
-            background: 'var(--midnight)',
-            color: 'white',
-            padding: '8px 12px',
-            borderRadius: '6px',
-            fontSize: '12px',
-            pointerEvents: 'none',
-            zIndex: 1000,
-            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-            maxWidth: '200px',
-          }}
-        >
-          <div style={{ fontWeight: '600', marginBottom: '4px' }}>{hoveredCountry.name}</div>
-          <div style={{ color: 'rgba(255,255,255,0.8)' }}>
-            {METRICS.find(m => m.key === activeMetric)?.label}: {hoveredCountry[activeMetric]}{activeMetric !== 'fdi' ? '%' : ''}
-          </div>
-          <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '11px', marginTop: '2px' }}>
-            {hoveredCountry.region} Africa
-          </div>
-        </div>
-      )}
 
       {/* Tooltip */}
       {hoveredCountry && (
