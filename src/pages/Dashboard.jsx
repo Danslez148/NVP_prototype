@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import {useCallback} from 'react'
+import AfricaMap from '../components/AfricaMap'
 
 const countries = [
   { name: 'Nigeria', gdp: 92, inflation: 22, urban: 54, fdi: 88, region: 'West' },
@@ -64,6 +66,10 @@ export default function Dashboard({ user, navigate }) {
   const [activeMetric, setActiveMetric] = useState('gdp')
   const [selectedCountry, setSelectedCountry] = useState(null)
   const [filterRegion, setFilterRegion] = useState('All')
+
+  const handleCountryClick = useCallback((country) => {
+    setSelectedCountry(prev => prev?.name === country.name ? null : country)
+  }, [])
 
   const metric = metrics.find(m => m.key === activeMetric)
   const regions = ['All', 'West', 'East', 'North', 'South']
@@ -141,25 +147,11 @@ export default function Dashboard({ user, navigate }) {
                 </button>
               ))}
             </div>
-
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: '10px' }}>
-              {sorted.map(country => (
-                <div key={country.name} onClick={() => setSelectedCountry(selectedCountry?.name === country.name ? null : country)} style={{ borderRadius: '10px', padding: '1rem', background: getColor(country[activeMetric], activeMetric), border: selectedCountry?.name === country.name ? `2px solid ${metric.color}` : '2px solid transparent', cursor: 'pointer', transition: 'all 0.2s' }}>
-                  <div style={{ fontSize: '13px', fontWeight: '600', color: 'var(--midnight)', marginBottom: '6px' }}>{country.name}</div>
-                  <div style={{ fontSize: '22px', fontWeight: '700', color: 'var(--midnight)' }}>{country[activeMetric]}{activeMetric !== 'fdi' ? '%' : ''}</div>
-                  <div style={{ fontSize: '11px', color: 'rgba(13,27,42,0.6)', marginTop: '2px' }}>{metric.label}</div>
-                  <div style={{ marginTop: '8px' }}>
-                    <MiniSparkline data={trendData[country.name] ?? [5,5,5,5,5,5]} color={metric.color} />
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '1rem' }}>
-              <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Low</span>
-              <div style={{ flex: 1, height: '8px', borderRadius: '4px', background: `linear-gradient(to right, ${getColor(10, activeMetric)}, ${getColor(90, activeMetric)})` }} />
-              <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>High</span>
-            </div>
+              <AfricaMap
+              countries={filtered}
+              activeMetric={activeMetric}
+              onCountryClick={handleCountryClick}
+            />
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -216,6 +208,29 @@ export default function Dashboard({ user, navigate }) {
               </button>
             </div>
 
+          </div>
+        </div>
+
+        {/* Country Tiles Section */}
+        <div style={{ background: 'var(--white)', borderRadius: '12px', border: '1px solid #E8E0D5', padding: '1.5rem', marginTop: '1.5rem' }}>
+          <h2 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '1rem' }}>Country Overview</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: '10px' }}>
+            {sorted.map(country => (
+              <div key={country.name} onClick={() => setSelectedCountry(selectedCountry?.name === country.name ? null : country)} style={{ borderRadius: '10px', padding: '1rem', background: getColor(country[activeMetric], activeMetric), border: selectedCountry?.name === country.name ? `2px solid ${metric.color}` : '2px solid transparent', cursor: 'pointer', transition: 'all 0.2s' }}>
+                <div style={{ fontSize: '13px', fontWeight: '600', color: 'var(--midnight)', marginBottom: '6px' }}>{country.name}</div>
+                <div style={{ fontSize: '22px', fontWeight: '700', color: 'var(--midnight)' }}>{country[activeMetric]}{activeMetric !== 'fdi' ? '%' : ''}</div>
+                <div style={{ fontSize: '11px', color: 'rgba(13,27,42,0.6)', marginTop: '2px' }}>{metric.label}</div>
+                <div style={{ marginTop: '8px' }}>
+                  <MiniSparkline data={trendData[country.name] ?? [5,5,5,5,5,5]} color={metric.color} />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '1rem' }}>
+            <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Low</span>
+            <div style={{ flex: 1, height: '8px', borderRadius: '4px', background: `linear-gradient(to right, ${getColor(10, activeMetric)}, ${getColor(90, activeMetric)})` }} />
+            <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>High</span>
           </div>
         </div>
       </div>
