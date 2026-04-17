@@ -87,7 +87,7 @@ export default function Dashboard({ user, navigate }) {
           <span style={{ color: 'var(--white)', fontWeight: '600', fontSize: '18px' }}>IntelAfrica<span style={{ color: 'var(--terracotta-light)' }}>IQ</span></span>
         </div>
         <div style={{ display: 'flex', gap: '8px' }}>
-          {[['dashboard', 'Overview'], ['market', 'Market Search']].map(([screen, label]) => (
+          {[['dashboard', 'Overview'], ['market', 'Market Search'], ['experts', 'Expert Network']].map(([screen, label]) => (
             <button key={screen} onClick={() => navigate(screen)} style={{ padding: '7px 16px', borderRadius: '6px', fontSize: '13px', fontWeight: '500', background: screen === 'dashboard' ? 'rgba(193,68,14,0.25)' : 'transparent', color: screen === 'dashboard' ? 'var(--terracotta-light)' : 'rgba(255,255,255,0.6)', border: screen === 'dashboard' ? '1px solid rgba(193,68,14,0.4)' : '1px solid transparent', transition: 'all 0.2s' }}>
               {label}
             </button>
@@ -187,7 +187,7 @@ export default function Dashboard({ user, navigate }) {
             ) : (
               <div style={{ background: 'var(--midnight)', borderRadius: '12px', padding: '1.5rem', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '200px', textAlign: 'center' }}>
                 <div style={{ fontSize: '32px', marginBottom: '0.75rem', opacity: 0.4 }}>◎</div>
-                <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '13px' }}>Click any country card to inspect its full macro profile</p>
+                <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '13px' }}>Click any country on the map or country card below to inspect its full macro profile</p>
               </div>
             )}
 
