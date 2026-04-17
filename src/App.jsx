@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Landing from './pages/Landing'
 import Dashboard from './pages/Dashboard'
 import MarketSearch from './pages/MarketSearch'
+import ExpertNetwork from './pages/ExpertNetwork'
 
 export default function App() {
   const [screen, setScreen] = useState('landing')
@@ -19,6 +20,7 @@ export default function App() {
       {screen === 'landing' && <Landing onLogin={login} />}
       {screen === 'dashboard' && <Dashboard user={user} navigate={navigate} />}
       {screen === 'market' && <MarketSearch user={user} navigate={navigate} />}
+      {screen === 'experts' && <ExpertNetwork user={user} navigate={navigate} />}
     </>
   )
 }

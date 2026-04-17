@@ -50,7 +50,7 @@ export default function MarketSearch({ user, navigate }) {
           <span style={{ color: 'var(--white)', fontWeight: '600', fontSize: '18px' }}>IntelAfrica<span style={{ color: 'var(--terracotta-light)' }}>IQ</span></span>
         </div>
         <div style={{ display: 'flex', gap: '8px' }}>
-          {[['dashboard', 'Overview'], ['market', 'Market Search']].map(([screen, label]) => (
+          {[['dashboard', 'Overview'], ['market', 'Market Search'], ['experts', 'Expert Network']].map(([screen, label]) => (
             <button key={screen} onClick={() => navigate(screen)} style={{ padding: '7px 16px', borderRadius: '6px', fontSize: '13px', fontWeight: '500', background: screen === 'market' ? 'rgba(193,68,14,0.25)' : 'transparent', color: screen === 'market' ? 'var(--terracotta-light)' : 'rgba(255,255,255,0.6)', border: screen === 'market' ? '1px solid rgba(193,68,14,0.4)' : '1px solid transparent', transition: 'all 0.2s' }}>
               {label}
             </button>
